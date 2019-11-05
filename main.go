@@ -1,25 +1,33 @@
 package main
 
 import (
-	"github.com/gin-gonic/contrib/static"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
+
+var router *gin.Engine
+
 func main() {
 
-	// default router from Gin
-	router := gin.Default()
+	// Set the router as the default one provided by Gin
+	router = gin.Default()
 
-	router.Use(static.Serve("/", static.LocalFile("./views", true)))
-	api:= router.Group("/api")
-	{
-		api.GET("/", func(context *gin.Context) {
-			context.JSON(http.StatusOK, gin.H{
-				"message": "pong",
-			})
+	router.LoadHTMLGlob("templates/*")
 
-		})
-	}
+	router.GET("/", func(c *gin.Context) {
 
-	_ = router.Run(":3000")
+		c.HTML(
+			http.StatusOK,
+			"index.html",
+			gin.H{
+				"title": "Home Page",
+			},
+		)
+
+	})
+
+	// Start serving the application
+	router.Run()
+
 }
