@@ -23,3 +23,5 @@ func TestShowIndexPageUnAuthenticated(t *testing.T) {
 		return statusOK && pageOK
 	})
 }
+
+//func TestArticleUnAuthenticated
